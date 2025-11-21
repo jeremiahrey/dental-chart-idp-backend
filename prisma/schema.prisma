@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id String @id @default(uuid())
+  firstName String
+  lastName String
+  birrthDate DateTime?
+  email String? @unique
+  phone String?
+
+  dentalCharts DentalChart[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([firstName, lastName])
+  @@index([email])
+
+}
+
+
+model DentalChart {
+  id String @id @default(uuid())
+  patientId String
+  patient Patient @relation(fields: [patientId], references: [id])
+
+  visitDate DateTime @default(now())
+  visitType String?
+
+  page1Completed Boolean @default(false)
+  page2Completed Boolean @default(false)
+  page3Completed Boolean @default(false)
+  page4Completed Boolean @default(false)
+
+  page1Verified Boolean @default(false)
+  page2Verified Boolean @default(false)
+  page3Verified Boolean @default(false)
+  page4Verified Boolean @default(false)
+
+  page1Data Json?
+  page2Data Json?
+  page3Data Json?
+  page4Data Json?
+
+  page1ImageUrl String?
+  page2ImageUrl String?
+  page3ImageUrl String?
+  page4ImageUrl String?
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId])
+  @@index([visitDate])
+  @@index(isCompleted)
+
+}
