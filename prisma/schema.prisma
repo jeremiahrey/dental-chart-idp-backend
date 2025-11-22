@@ -18,7 +18,7 @@ model Patient {
   id String @id @default(uuid())
   firstName String
   lastName String
-  birrthDate DateTime?
+  birthDate DateTime?
   email String? @unique
   phone String?
 
