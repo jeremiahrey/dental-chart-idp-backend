@@ -121,19 +121,20 @@ export interface Page2Data {
     patientSignaturePresent: boolean;
     parentGuardianSignaturePresent: boolean;
     dentistSignaturePresent: boolean;
+    witnessSignaturePresent: boolean;
     sectionsInitialed: {
-      workToBeDone: boolean | null;
+      treatmentToBeDone: boolean | null; // Renamed to match prompt
       drugsAndMedications: boolean | null;
       changesInTreatmentPlan: boolean | null;
-      radiographs: boolean | null;
+      radiograph: boolean | null; // Renamed to match prompt
       removalOfTeeth: boolean | null;
       crownsAndBridges: boolean | null;
-      endodonticTreatment: boolean | null;
+      endodontics: boolean | null; // Renamed to match prompt
       periodontalDisease: boolean | null;
       fillings: boolean | null;
       dentures: boolean | null;
     };
-    patientNameOnConsent: string | null; // Need to check pa eto to be remove
+    patientNameOnConsent: string | null;
     dentistNameOnConsent: string | null;
     additionalNotes: string | null;
   };
@@ -145,14 +146,17 @@ export interface ToothStatus {
   statusCode: string | null;
 }
 
-// Page 3 Data Structure
+// Page 3 Data Structure (FIXED: Added Temporary Teeth arrays)
 export interface Page3Data {
   dentalChart: {
     statusBoxes: {
-      upperTeeth: ToothStatus[];
-      lowerTeeth: ToothStatus[];
+      permanentUpperTeeth: ToothStatus[];
+      permanentLowerTeeth: ToothStatus[];
+      temporaryUpperTeeth: ToothStatus[];
+      temporaryLowerTeeth: ToothStatus[];
     };
     periodontalScreening: {
+      codeExtracted: string | null;
       gingivitis: boolean | null;
       earlyPeriodontitis: boolean | null;
       moderatePeriodontitis: boolean | null;
@@ -176,10 +180,12 @@ export interface Page3Data {
       trismus: boolean | null;
       muscleSpasm: boolean | null;
     };
+    oralHygieneRating: string | null;
+    remarks: string | null;
   };
 }
 
-// Treatment Record Entry
+// Treatment Record Entry (FIXED: Added nextAppointment)
 export interface TreatmentEntry {
   date: string | null;
   toothNumber: string | null;
@@ -188,18 +194,21 @@ export interface TreatmentEntry {
   amountCharged: number | null;
   amountPaid: number | null;
   balance: number | null;
+  nextAppointment: string | null;
 }
 
 // Page 4 Data Structure
 export interface Page4Data {
   treatmentRecord: {
+    header: {
+      name: string | null;
+      age: string | null;
+      gender: string | null;
+    };
     entries: TreatmentEntry[];
     totalAmountCharged: number | null;
     totalAmountPaid: number | null;
     totalBalance: number | null;
-    dentistSignaturePresent: boolean;
-    patientSignaturePresent: boolean;
-    dateOfLastEntry: string | null;
   };
 }
 
