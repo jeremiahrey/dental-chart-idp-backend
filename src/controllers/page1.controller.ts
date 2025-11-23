@@ -8,34 +8,40 @@ import { Page1Data } from "../types/dentalChart.types";
 //Extract data from page 1 (Patient Info and Med History)
 export async function extractPage1(req: MulterRequest, res: Response) {
   try {
-    //Validate file upload
+    console.log("🔵 Step 1: Validating file...");
     if (!req.file) {
       return res.status(400).json({
         success: false,
         error: "No file uploaded",
       });
     }
+    console.log("✅ File received:", req.file.originalname);
 
-    // Load Page 1 prompt
+    console.log("🔵 Step 2: Loading prompt...");
     const promptPath = path.join(
       __dirname,
       "../../docs/prompts/page1-prompt.md"
     );
     const prompt = await loadPrompt(promptPath);
+    console.log("✅ Prompt loaded, length:", prompt.length);
 
-    // Extract data using Gemini
+    console.log("🔵 Step 3: Calling Gemini API...");
     const imagePath = req.file.path;
     const mimeType = req.file.mimetype;
 
     const result = await extractPageData(imagePath, prompt, mimeType);
+    console.log("🔵 Step 4: Gemini result:", result); // ← See full result
 
     if (!result.success) {
+      console.error("❌ Extraction failed:", result.error, result.details);
       return res.status(500).json({
         success: false,
         error: "Extraction failed",
         details: result.error,
       });
     }
+
+    console.log("✅ Extraction successful!");
 
     const page1Data = result.data as Page1Data;
 
