@@ -12,14 +12,18 @@ if (!fs.existsSync(uploadDir)) {
 // Configure storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    cb(null, uploadDir); // Directory where files are saved
+  },
+  filename: function (req, file, cb) {
+    // Generate unique filename
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const exit = path.extname(file.originalname);
-    const basename = path.basename(file.originalname, exit);
-    cb(null, `${basename}-${uniqueSuffix}${exit}`);
+    const ext = path.extname(file.originalname);
+    const basename = path.basename(file.originalname, ext);
+    cb(null, `${basename}-${uniqueSuffix}${ext}`);
   },
 });
 
-//File filter- only accept images and PDFs
+// File filter - only accept images and PDFs
 const fileFilter = (
   req: Request,
   file: Express.Multer.File,
@@ -53,10 +57,10 @@ export const upload = multer({
   },
 });
 
-//Single file upload middleware
+// Single file upload middleware
 export const uploadSingle = upload.single("image");
 
-//Error handling middleware for multer
+// Error handling middleware for multer
 export const handleUploadError = (
   err: any,
   req: Request,
@@ -68,21 +72,21 @@ export const handleUploadError = (
       return res.status(400).json({
         success: false,
         error: "File too large",
-        message: "Maximum file is 10MB",
+        message: "Maximum file size is 10MB",
       });
     }
 
     return res.status(400).json({
       success: false,
       error: "Upload error",
-      messge: err.message,
+      message: err.message,
     });
   }
 
   if (err) {
     return res.status(400).json({
       success: false,
-      error: "Upload error",
+      error: "Upload failed",
       message: err.message,
     });
   }

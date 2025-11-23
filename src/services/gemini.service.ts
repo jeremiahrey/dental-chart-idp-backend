@@ -22,7 +22,7 @@ export async function extractPageData(
   try {
     // Initailize model
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash-latest",
+      model: "gemini-2.5-flash",
     });
 
     const base64Data = await fileToBase64(imagePath);
