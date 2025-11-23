@@ -15,17 +15,17 @@ export async function getAllCharts(req: Request, res: Response) {
     const skip = (page - 1) * limit;
 
     // Optional filters
-    const isComplete =
-      req.query.isComplete === "true"
+    const isCompleted =
+      req.query.isCompleted === "true"
         ? true
-        : req.query.isComplete === "false"
+        : req.query.isCompleted === "false"
         ? false
         : undefined;
 
     // Build where clause
     const where: any = {};
-    if (isComplete !== undefined) {
-      where.isComplete = isComplete;
+    if (isCompleted !== undefined) {
+      where.isCompleted = isCompleted;
     }
 
     // Get charts with patient info
@@ -287,7 +287,7 @@ export async function getChartStats(req: Request, res: Response) {
         recentCharts: recentCharts.map((chart) => ({
           id: chart.id,
           patientName: `${chart.patient.firstName} ${chart.patient.lastName}`,
-          isComplete: chart.isCompleted,
+          isCompleted: chart.isCompleted,
           createdAt: chart.createdAt,
         })),
       },
