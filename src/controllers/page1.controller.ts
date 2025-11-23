@@ -4,7 +4,6 @@ import prisma from "../config/database";
 import path from "path";
 import { MulterRequest } from "../types/express.types";
 import { Page1Data } from "../types/dentalChart.types";
-import { ResponseSchema } from "@google/generative-ai";
 
 //Extract data from page 1 (Patient Info and Med History)
 export async function extractPage1(req: MulterRequest, res: Response) {
@@ -87,7 +86,7 @@ export async function extractPage1(req: MulterRequest, res: Response) {
     });
   } catch (error) {
     console.error("Page 1 extraction error:", error);
-    return res.json({
+    return res.status(500).json({
       success: false,
       error: "Server Error",
       message: error instanceof Error ? error.message : "Unknown Error",
@@ -119,7 +118,7 @@ export async function updatePage1(req: Request, res: Response) {
     });
 
     return res.json({
-      sucess: true,
+      success: true,
       message: "Page 1 updated successfully",
       data: updatedChart.page1Data,
     });
@@ -136,8 +135,8 @@ export async function updatePage1(req: Request, res: Response) {
       });
     }
 
-    return res.json({
-      sucess: false,
+    return res.status(500).json({
+      success: false,
       error: "Update failed",
       message: error instanceof Error ? error.message : "Unknown error",
     });
