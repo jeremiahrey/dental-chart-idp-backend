@@ -75,9 +75,9 @@ npm run dev
 | GET    | `/api/health`                    | Health check                  |
 | POST   | `/api/extract/page1`             | Extract Page 1 (Patient Info) |
 | PUT    | `/api/extract/page1/:chartId`    | Update Page 1                 |
-| POST   | `/api/extract/page2`             | Extract Page 2 (Consent)      |
+| POST   | `/api/extract/page2`             | Extract Page 2 (Dental Chart) |
 | PUT    | `/api/extract/page2/:chartId`    | Update Page 2                 |
-| POST   | `/api/extract/page3`             | Extract Page 3 (Dental Chart) |
+| POST   | `/api/extract/page3`             | Extract Page 3 (Consent)      |
 | PUT    | `/api/extract/page3/:chartId`    | Update Page 3                 |
 | POST   | `/api/extract/page4`             | Extract Page 4 (Treatment)    |
 | PUT    | `/api/extract/page4/:chartId`    | Update Page 4                 |
@@ -86,6 +86,17 @@ npm run dev
 | GET    | `/api/charts/:id`                | Get single chart              |
 | GET    | `/api/charts/patient/:patientId` | Get patient charts            |
 | DELETE | `/api/charts/:id`                | Delete chart                  |
+
+---
+
+## 📄 Page Order
+
+**Updated page sequence for better workflow:**
+
+- **Page 1:** Patient Information & Medical History
+- **Page 2:** Dental Chart & Examination (formerly Page 3)
+- **Page 3:** Informed Consent (formerly Page 2)
+- **Page 4:** Treatment Record
 
 ---
 
@@ -149,6 +160,14 @@ curl -X POST http://localhost:3000/api/extract/page1 \
   -F "image=@/path/to/page1.jpg"
 ```
 
+**Extract Page 2 (Dental Chart):**
+
+```bash
+curl -X POST http://localhost:3000/api/extract/page2 \
+  -F "image=@/path/to/page2.jpg" \
+  -F "chartId=uuid-from-page1"
+```
+
 **Response:**
 
 ```json
@@ -157,7 +176,7 @@ curl -X POST http://localhost:3000/api/extract/page1 \
   "chartId": "uuid-here",
   "patientId": "uuid-here",
   "data": { ... },
-  "message": "Page 1 extracted successfully"
+  "message": "Page 2 extracted successfully"
 }
 ```
 
@@ -242,10 +261,10 @@ UPLOAD_DIR="./uploads"
 
 ## 🎯 Workflow
 
-1. POST /api/extract/page1 → Get `chartId`
-2. POST /api/extract/page2 → Use `chartId`
-3. POST /api/extract/page3 → Use `chartId`
-4. POST /api/extract/page4 → Use `chartId` (sets `isComplete=true`)
+1. POST /api/extract/page1 → Get `chartId` (Patient Info & Medical History)
+2. POST /api/extract/page2 → Use `chartId` (Dental Chart & Examination)
+3. POST /api/extract/page3 → Use `chartId` (Informed Consent)
+4. POST /api/extract/page4 → Use `chartId` (Treatment Record - sets `isComplete=true`)
 5. PUT endpoints to verify/correct data
 6. GET /api/charts to view all
 

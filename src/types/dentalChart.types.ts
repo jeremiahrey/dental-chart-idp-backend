@@ -114,14 +114,40 @@ export interface Page1Data {
   };
 }
 
+// Page 2 Data Structure
+export interface Page2Data {
+  informedConsent: {
+    consentDate: string | null;
+    patientSignaturePresent: boolean;
+    parentGuardianSignaturePresent: boolean;
+    dentistSignaturePresent: boolean;
+    witnessSignaturePresent: boolean;
+    sectionsInitialed: {
+      treatmentToBeDone: boolean | null; // Renamed to match prompt
+      drugsAndMedications: boolean | null;
+      changesInTreatmentPlan: boolean | null;
+      radiograph: boolean | null; // Renamed to match prompt
+      removalOfTeeth: boolean | null;
+      crownsAndBridges: boolean | null;
+      endodontics: boolean | null; // Renamed to match prompt
+      periodontalDisease: boolean | null;
+      fillings: boolean | null;
+      dentures: boolean | null;
+    };
+    patientNameOnConsent: string | null;
+    dentistNameOnConsent: string | null;
+    additionalNotes: string | null;
+  };
+}
+
 // Tooth Status
 export interface ToothStatus {
   toothNumber: string;
   statusCode: string | null;
 }
 
-// Page 2 Data Structure (FIXED: Added Temporary Teeth arrays)
-export interface Page2Data {
+// Page 3 Data Structure (FIXED: Added Temporary Teeth arrays)
+export interface Page3Data {
   dentalChart: {
     statusBoxes: {
       permanentUpperTeeth: ToothStatus[];
@@ -156,32 +182,6 @@ export interface Page2Data {
     };
     oralHygieneRating: string | null;
     remarks: string | null;
-  };
-}
-
-// Page 3 Data Structure
-export interface Page3Data {
-  informedConsent: {
-    consentDate: string | null;
-    patientSignaturePresent: boolean;
-    parentGuardianSignaturePresent: boolean;
-    dentistSignaturePresent: boolean;
-    witnessSignaturePresent: boolean;
-    sectionsInitialed: {
-      treatmentToBeDone: boolean | null; // Renamed to match prompt
-      drugsAndMedications: boolean | null;
-      changesInTreatmentPlan: boolean | null;
-      radiograph: boolean | null; // Renamed to match prompt
-      removalOfTeeth: boolean | null;
-      crownsAndBridges: boolean | null;
-      endodontics: boolean | null; // Renamed to match prompt
-      periodontalDisease: boolean | null;
-      fillings: boolean | null;
-      dentures: boolean | null;
-    };
-    patientNameOnConsent: string | null;
-    dentistNameOnConsent: string | null;
-    additionalNotes: string | null;
   };
 }
 
