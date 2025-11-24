@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * POST /api/extract/page3
- * Extract data from Page 3 image (Informed Consent)
+ * Extract data from Page 3 image (Dental Chart & Examination)
  * Requires existing chartId from Page 1
  *
  * Request:
@@ -16,7 +16,7 @@ const router = express.Router();
  *
  * Response:
  * - chartId: string
- * - data: Page3Data object
+ * - data: Page3Data object (tooth status, periodontal, occlusion, TMD)
  */
 router.post("/", uploadSingle, extractPage3);
 
