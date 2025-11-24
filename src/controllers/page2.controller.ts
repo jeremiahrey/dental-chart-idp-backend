@@ -5,7 +5,10 @@ import path from "path";
 import { MulterRequest } from "../types/express.types";
 import { Page2Data } from "../types/dentalChart.types";
 
-//Extract data from Page 2 (Informed Consent)
+/**
+ * Extract data from Page 2 (Dental Chart & Examination)
+ * Extracts tooth status codes, periodontal screening, occlusion, TMD, etc.
+ */
 export async function extractPage2(req: MulterRequest, res: Response) {
   try {
     // Validate file upload
@@ -23,6 +26,7 @@ export async function extractPage2(req: MulterRequest, res: Response) {
       return res.status(400).json({
         success: false,
         error: "chartId is required",
+        message: "Please complete Page 1 first to get a chartId",
       });
     }
 
@@ -35,6 +39,7 @@ export async function extractPage2(req: MulterRequest, res: Response) {
       return res.status(404).json({
         success: false,
         error: "Chart not found",
+        message: "No dental chart found with the provided chartId",
       });
     }
 
@@ -89,7 +94,10 @@ export async function extractPage2(req: MulterRequest, res: Response) {
   }
 }
 
-//Update Page 2 data after user verification
+/**
+ * Update Page 2 data after user verification
+ * Used when user corrects tooth status codes or other examination data
+ */
 export async function updatePage2(req: Request, res: Response) {
   try {
     const { chartId } = req.params;
@@ -115,10 +123,10 @@ export async function updatePage2(req: Request, res: Response) {
     return res.json({
       success: true,
       message: "Page 2 updated successfully",
-      data: updatedChart.page2Data,
+      data: updatedChart.page3Data,
     });
   } catch (error) {
-    console.error("Page 2 update error:", error);
+    console.error("Page 3 update error:", error);
 
     if (
       error instanceof Error &&
