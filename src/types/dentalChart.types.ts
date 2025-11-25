@@ -11,6 +11,7 @@ export interface PatientInformation {
   religion: string | null;
   nickname: string | null;
   homeAddress: string | null;
+  homeNo: string | null;
   occupation: string | null;
   officeNo: string | null;
   dentalInsurance: string | null;
@@ -122,6 +123,12 @@ export interface ToothStatus {
 
 // Page 2 Data Structure (FIXED: Added Temporary Teeth arrays)
 export interface Page2Data {
+  header: {
+    name: string | null;
+    age: string | null;
+    gender: string | null;
+    date: string | null;
+  };
   dentalChart: {
     statusBoxes: {
       permanentUpperTeeth: ToothStatus[];
@@ -154,8 +161,6 @@ export interface Page2Data {
       trismus: boolean | null;
       muscleSpasm: boolean | null;
     };
-    oralHygieneRating: string | null;
-    remarks: string | null;
   };
 }
 
@@ -163,25 +168,20 @@ export interface Page2Data {
 export interface Page3Data {
   informedConsent: {
     consentDate: string | null;
-    patientSignaturePresent: boolean;
-    parentGuardianSignaturePresent: boolean;
+    patientOrGuardianSignaturePresent: boolean;
     dentistSignaturePresent: boolean;
-    witnessSignaturePresent: boolean;
     sectionsInitialed: {
-      treatmentToBeDone: boolean | null; // Renamed to match prompt
-      drugsAndMedications: boolean | null;
-      changesInTreatmentPlan: boolean | null;
-      radiograph: boolean | null; // Renamed to match prompt
-      removalOfTeeth: boolean | null;
-      crownsAndBridges: boolean | null;
-      endodontics: boolean | null; // Renamed to match prompt
-      periodontalDisease: boolean | null;
-      fillings: boolean | null;
-      dentures: boolean | null;
+      treatmentToBeDone: string | null; // Renamed to match prompt
+      drugsAndMedications: string | null;
+      changesInTreatmentPlan: string | null;
+      radiograph: string | null; // Renamed to match prompt
+      removalOfTeeth: string | null;
+      crownsAndBridges: string | null;
+      endodontics: string | null; // Renamed to match prompt
+      periodontalDisease: string | null;
+      fillings: string | null;
+      dentures: string | null;
     };
-    patientNameOnConsent: string | null;
-    dentistNameOnConsent: string | null;
-    additionalNotes: string | null;
   };
 }
 
@@ -206,9 +206,6 @@ export interface Page4Data {
       gender: string | null;
     };
     entries: TreatmentEntry[];
-    totalAmountCharged: number | null;
-    totalAmountPaid: number | null;
-    totalBalance: number | null;
   };
 }
 

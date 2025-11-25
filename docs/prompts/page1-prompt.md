@@ -1,6 +1,6 @@
 You are a medical data extraction specialist. Extract ALL information from this PDA Dental Chart PAGE 1 ONLY (Patient Information Record and Medical History section).
 
-Return ONLY a valid JSON object with no markdown formatting, no code blocks, no explanations.
+Return ONLY a valid JSON object. No markdown, no explanations.
 
 EXTRACT THE FOLLOWING:
 
@@ -10,11 +10,12 @@ EXTRACT THE FOLLOWING:
 "firstName": "extracted first name or null",
 "middleName": "extracted middle name or null",
 "birthdate": "MM/DD/YYYY format or null",
-"age": "number or null",
+"age": "number as string or null",
 "sex": "M or F or null",
 "religion": "extracted religion or null",
 "nickname": "extracted nickname or null",
 "homeAddress": "complete home address or null",
+"homeNo": "home phone number or null",
 "occupation": "patient occupation or null",
 "officeNo": "office phone number or null",
 "dentalInsurance": "insurance provider name or null",
@@ -65,41 +66,41 @@ EXTRACT THE FOLLOWING:
 "bloodType": "blood type (e.g., A+, O-, AB+) or null",
 "bloodPressure": "reading in format 120/80 or null",
 "conditions": {
-"highBloodPressure": "true if checked/circled, false if blank, null if unclear",
-"lowBloodPressure": "true/false/null",
-"epilepsyConvulsions": "true/false/null",
-"aidsHivInfection": "true/false/null",
-"sexuallyTransmittedDisease": "true/false/null",
-"stomachTroublesUlcers": "true/false/null",
-"faintingSeizure": "true/false/null",
-"rapidWeightLoss": "true/false/null",
-"radiationTherapy": "true/false/null",
-"jointReplacementImplant": "true/false/null",
-"heartSurgery": "true/false/null",
-"heartAttack": "true/false/null",
-"thyroidProblem": "true/false/null",
-"heartDisease": "true/false/null",
-"heartMurmur": "true/false/null",
-"hepatitisLiverDisease": "true/false/null",
-"rheumaticFever": "true/false/null",
-"hayFeverAllergies": "true/false/null",
-"respiratoryProblems": "true/false/null",
-"hepatitisJaundice": "true/false/null",
-"tuberculosis": "true/false/null",
-"swollenAnkles": "true/false/null",
-"kidneyDisease": "true/false/null",
-"diabetes": "true/false/null",
-"chestPain": "true/false/null",
-"stroke": "true/false/null",
-"cancerTumors": "true/false/null",
-"anemia": "true/false/null",
-"angina": "true/false/null",
-"asthma": "true/false/null",
-"emphysema": "true/false/null",
-"bleedingProblems": "true/false/null",
-"bloodDiseases": "true/false/null",
-"headInjuries": "true/false/null",
-"arthritisRheumatism": "true/false/null",
+"highBloodPressure": boolean,
+"lowBloodPressure": boolean,
+"epilepsyConvulsions": boolean,
+"aidsHivInfection": boolean,
+"sexuallyTransmittedDisease": boolean,
+"stomachTroublesUlcers": boolean,
+"faintingSeizure": boolean,
+"rapidWeightLoss": boolean,
+"radiationTherapy": boolean,
+"jointReplacementImplant": boolean,
+"heartSurgery": boolean,
+"heartAttack": boolean,
+"thyroidProblem": boolean,
+"heartDisease": boolean,
+"heartMurmur": boolean,
+"hepatitisLiverDisease": boolean,
+"rheumaticFever": boolean,
+"hayFeverAllergies": boolean,
+"respiratoryProblems": boolean,
+"hepatitisJaundice": boolean,
+"tuberculosis": boolean,
+"swollenAnkles": boolean,
+"kidneyDisease": boolean,
+"diabetes": boolean,
+"chestPain": boolean,
+"stroke": boolean,
+"cancerTumors": boolean,
+"anemia": boolean,
+"angina": boolean,
+"asthma": boolean,
+"emphysema": boolean,
+"bleedingProblems": boolean,
+"bloodDiseases": boolean,
+"headInjuries": boolean,
+"arthritisRheumatism": boolean,
 "other": "other conditions written in or null"
 }
 }
@@ -107,13 +108,7 @@ EXTRACT THE FOLLOWING:
 
 EXTRACTION RULES:
 
-1. Use null for empty, blank, or illegible fields
-2. For checkboxes: true if checked/circled/marked, false if blank, null if unclear
-3. Preserve exact handwritten spelling, even if unusual
-4. Use MM/DD/YYYY format for all dates
-5. Extract blood pressure as string (e.g., "120/80")
-6. For Yes/No questions, use "Yes", "No", or null
-7. If multiple conditions are checked in the medical history checklist, mark each as true
-8. Do not invent data - only extract what is clearly visible
-
-Return ONLY the JSON object. No markdown, no code blocks, no explanations.
+1. Use null for empty, blank, or illegible fields.
+2. For "Yes/No" fields: Use strings "Yes" or "No".
+3. For "conditions" (booleans): Use true if checked/circled, false if blank.
+4. Do not invent data.
