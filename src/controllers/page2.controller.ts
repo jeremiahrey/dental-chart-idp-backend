@@ -123,10 +123,10 @@ export async function updatePage2(req: Request, res: Response) {
     return res.json({
       success: true,
       message: "Page 2 updated successfully",
-      data: updatedChart.page3Data,
+      data: updatedChart.page2Data,
     });
   } catch (error) {
-    console.error("Page 3 update error:", error);
+    console.error("Page 2 update error:", error);
 
     if (
       error instanceof Error &&
